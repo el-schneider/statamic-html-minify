@@ -2,18 +2,18 @@
 
 namespace Octoper\HtmlMinify\Tests;
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Octoper\HtmlMinify\HtmlMinifyMiddleware;
 use Octoper\HtmlMinify\HtmlMinifyServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
-use Statamic\Extend\Manifest;
 use Statamic\Providers\StatamicServiceProvider;
 use Statamic\Statamic;
+use Statamic\Testing\Concerns\PreventsSavingStacheItemsToDisk;
 
 abstract class TestCase extends OrchestraTestCase
 {
-    protected function getPackageProviders($app)
+    use PreventsSavingStacheItemsToDisk;
+    protected function getPackageProviders($app): array
     {
         return [
             StatamicServiceProvider::class,
@@ -21,26 +21,22 @@ abstract class TestCase extends OrchestraTestCase
         ];
     }
 
-    protected function getPackageAliases($app)
+    protected function getPackageAliases($app): array
     {
         return [
             'Statamic' => Statamic::class,
         ];
     }
 
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         parent::getEnvironmentSetUp($app);
 
-        $app->make(Manifest::class)->manifest = [
-            'statamic-html-minify' => [
-                'id'        => 'octoper/statamic-html-minify',
-                'namespace' => 'Octoper\\StatamicHtmlMinify',
-            ],
-        ];
+        // Statamic v5 has automatic addon discovery, so manual manifest setup may not be needed
+        // but keeping for compatibility
     }
 
-    protected function resolveApplicationConfiguration($app)
+    protected function resolveApplicationConfiguration($app): void
     {
         parent::resolveApplicationConfiguration($app);
 
@@ -50,19 +46,19 @@ abstract class TestCase extends OrchestraTestCase
         ];
 
         foreach ($configs as $config) {
-            $app['config']->set("statamic.$config", require(__DIR__."/../vendor/statamic/cms/config/{$config}.php"));
+            $configPath = __DIR__."/../vendor/statamic/cms/config/{$config}.php";
+            if (!file_exists($configPath)) {
+                // Try the main project's vendor directory
+                $configPath = __DIR__."/../../../../vendor/statamic/cms/config/{$config}.php";
+            }
+            if (file_exists($configPath)) {
+                $app['config']->set("statamic.$config", require($configPath));
+            }
         }
 
         $app['config']->set('statamic.users.repository', 'file');
     }
 
-    /**
-     * Define environment setup.
-     *
-     * @param Application $app
-     *
-     * @return void
-     */
     protected function defineEnvironment($app): void
     {
         $app['config']->set('html-minify.optimizeViaHtmlDomParser', true);

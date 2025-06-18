@@ -11,7 +11,7 @@
 |
 */
 
-// uses(Tests\TestCase::class)->in('Feature');
+uses(Octoper\HtmlMinify\Tests\TestCase::class)->in(__DIR__);
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +23,12 @@
 | to assert different things. Of course, you may extend the Expectation API at any time.
 |
 */
+
+expect()->extend('toBeMinifiedHtml', function () {
+    return $this->toContain('<')
+        ->and($this->value)->not->toContain('  ') // No double spaces
+        ->and($this->value)->not->toContain("\n"); // No newlines
+});
 
 /*
 |--------------------------------------------------------------------------
