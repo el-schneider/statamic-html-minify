@@ -2,6 +2,7 @@
 
 namespace Octoper\HtmlMinify;
 
+use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -11,13 +12,8 @@ class HtmlMinifyMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \Closure                 $next
-     *
-     * @return mixed
      */
-    public function handle(Request $request, \Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         $response = $next($request);
 
@@ -34,7 +30,7 @@ class HtmlMinifyMiddleware
         return $next($request);
     }
 
-    protected function isValidHTMLResponse($response)
+    protected function isValidHTMLResponse(Response $response): bool
     {
         $contentType = $response->headers->get('Content-Type');
 

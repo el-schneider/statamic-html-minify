@@ -1,6 +1,6 @@
 {
     "name": "octoper/statamic-html-minify",
-    "description": "An addon to minify HTML for Statamic v3",
+    "description": "An addon to minify HTML for Statamic v5",
     "keywords": [
         "octoper",
         "statamic-html-minify"
@@ -14,17 +14,17 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "statamic/cms": "^3.3",
+        "php": "^8.2",
+        "statamic/cms": "^5.0",
         "voku/html-min": "^4.4"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.8",
-        "nunomaduro/collision": "^6.2",
-        "orchestra/testbench": "^7.4",
-        "pestphp/pest": "^1.21",
-        "phpunit/phpunit": "^9.5",
-        "spatie/pest-plugin-snapshots": "^1.1"
+        "nunomaduro/collision": "^7.0|^8.0",
+        "orchestra/testbench": "^8.0|^9.0",
+        "pestphp/pest": "^2.0",
+        "phpunit/phpunit": "^10.0",
+        "spatie/pest-plugin-snapshots": "^2.0"
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
@@ -51,7 +51,7 @@
     "extra": {
         "statamic": {
             "name": "HTML Minify",
-            "description": "An addon to minify HTML for Statamic v3"
+            "description": "An addon to minify HTML for Statamic v5"
         },
         "laravel": {
             "providers": [

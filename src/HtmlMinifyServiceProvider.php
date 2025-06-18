@@ -12,10 +12,8 @@ class HtmlMinifyServiceProvider extends AddonServiceProvider
         ],
     ];
 
-    public function boot(): void
+    public function bootAddon(): void
     {
-        parent::boot();
-
         $this->publishes([
             __DIR__.'/../config/html-minify.php' => config_path('html-minify.php'),
         ], 'statamic-html-minify-config');
@@ -24,7 +22,7 @@ class HtmlMinifyServiceProvider extends AddonServiceProvider
     /**
      * Register the application services.
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(
             __DIR__.'/../config/html-minify.php',

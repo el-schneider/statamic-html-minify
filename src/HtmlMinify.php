@@ -6,22 +6,14 @@ use voku\helper\HtmlMin;
 
 class HtmlMinify
 {
-    /**
-     * @var mixed
-     */
-    protected $content;
+    protected string $content;
 
-    /**
-     * HtmlMinify constructor.
-     *
-     * @param mixed $content
-     */
-    public function __construct($content)
+    public function __construct(string $content)
     {
         $this->content = $content;
     }
 
-    public function minifiedHtml()
+    public function minifiedHtml(): string
     {
         $config_prefix = 'html-minify';
 
@@ -56,7 +48,7 @@ class HtmlMinify
             ->minify($this->content);
     }
 
-    public function unminified()
+    public function unminified(): string
     {
         return $this->content;
     }
