@@ -1,6 +1,6 @@
 <?php
 
-namespace Octoper\HtmlMinify;
+namespace ElSchneider\HtmlMinify;
 
 use voku\helper\HtmlMin;
 
@@ -10,7 +10,7 @@ use voku\helper\HtmlMin;
  * This class provides a convenient interface for minifying HTML content
  * using the voku/html-min package with configurable options.
  * 
- * @package Octoper\HtmlMinify
+ * @package ElSchneider\HtmlMinify
  */
 class HtmlMinify
 {

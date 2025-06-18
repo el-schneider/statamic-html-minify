@@ -1,6 +1,6 @@
 <?php
 
-namespace Octoper\HtmlMinify\Tests;
+namespace ElSchneider\HtmlMinify\Tests;
 
 use function Spatie\Snapshots\assertMatchesSnapshot;
 
@@ -55,8 +55,8 @@ it('minifies when debug mode is disabled', function () {
 
 it('uses cached htmlmin instance for performance', function () {
     // Create multiple instances to test caching
-    $minifier1 = new \Octoper\HtmlMinify\HtmlMinify('<html></html>');
-    $minifier2 = new \Octoper\HtmlMinify\HtmlMinify('<html></html>');
+    $minifier1 = new \ElSchneider\HtmlMinify\HtmlMinify('<html></html>');
+    $minifier2 = new \ElSchneider\HtmlMinify\HtmlMinify('<html></html>');
     
     // Both should use the same cached instance internally
     $result1 = $minifier1->minifiedHtml();

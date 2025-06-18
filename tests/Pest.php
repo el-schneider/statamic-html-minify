@@ -11,7 +11,7 @@
 |
 */
 
-uses(Octoper\HtmlMinify\Tests\TestCase::class)->in(__DIR__);
+uses(ElSchneider\HtmlMinify\Tests\TestCase::class)->in(__DIR__);
 
 /*
 |--------------------------------------------------------------------------

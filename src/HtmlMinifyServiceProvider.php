@@ -1,6 +1,6 @@
 <?php
 
-namespace Octoper\HtmlMinify;
+namespace ElSchneider\HtmlMinify;
 
 use Statamic\Providers\AddonServiceProvider;
 
@@ -10,7 +10,7 @@ use Statamic\Providers\AddonServiceProvider;
  * This service provider registers the HTML minification middleware
  * and handles configuration publishing for the Statamic addon.
  * 
- * @package Octoper\HtmlMinify
+ * @package ElSchneider\HtmlMinify
  */
 class HtmlMinifyServiceProvider extends AddonServiceProvider
 {

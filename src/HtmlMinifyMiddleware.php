@@ -1,6 +1,6 @@
 <?php
 
-namespace Octoper\HtmlMinify;
+namespace ElSchneider\HtmlMinify;
 
 use Closure;
 use Exception;

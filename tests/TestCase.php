@@ -1,10 +1,10 @@
 <?php
 
-namespace Octoper\HtmlMinify\Tests;
+namespace ElSchneider\HtmlMinify\Tests;
 
 use Illuminate\Support\Facades\Route;
-use Octoper\HtmlMinify\HtmlMinifyMiddleware;
-use Octoper\HtmlMinify\HtmlMinifyServiceProvider;
+use ElSchneider\HtmlMinify\HtmlMinifyMiddleware;
+use ElSchneider\HtmlMinify\HtmlMinifyServiceProvider;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
 use Statamic\Providers\StatamicServiceProvider;
 use Statamic\Statamic;
@@ -66,7 +66,7 @@ abstract class TestCase extends OrchestraTestCase
         // Workaround for registering routes for tests
         Statamic::booted(function () {
             Statamic::pushWebRoutes(function () {
-                Route::namespace('\\Octoper\\HtmlMinify\\\Http\\Controllers')->group(function () {
+                Route::namespace('\\ElSchneider\\HtmlMinify\\\Http\\Controllers')->group(function () {
                     Route::get('/html-minify/test', function () {
                         return response(file_get_contents(__DIR__.'/testPages/simpleMinify.html'), '200', [
                             'Content-Type' => 'text/html',

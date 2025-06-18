@@ -1,5 +1,5 @@
 {
-    "name": "octoper/statamic-html-minify",
+    "name": "el-schneider/statamic-html-minify",
     "description": "An addon to minify HTML for Statamic v5",
     "keywords": [
         "octoper",
@@ -40,12 +40,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Octoper\\HtmlMinify\\": "src"
+            "ElSchneider\\HtmlMinify\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Octoper\\HtmlMinify\\Tests\\": "tests"
+            "ElSchneider\\HtmlMinify\\Tests\\": "tests"
         }
     },
     "extra": {
@@ -55,7 +55,7 @@
         },
         "laravel": {
             "providers": [
-                "Octoper\\HtmlMinify\\HtmlMinifyServiceProvider"
+                "ElSchneider\\HtmlMinify\\HtmlMinifyServiceProvider"
             ]
         }
     },
