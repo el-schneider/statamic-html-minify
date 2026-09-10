@@ -13,7 +13,7 @@ $finder = \PhpCsFixer\Finder::create()
     ->ignoreDotFiles(true)
     ->ignoreVCS(true);
 
-return \PhpCsFixer\Config::create()
+return (new \PhpCsFixer\Config())
     ->setRules(array_merge(require '.php_cs.laravel', [
         '@PSR2' => true,
         '@PSR12' => true,

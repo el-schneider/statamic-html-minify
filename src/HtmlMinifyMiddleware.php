@@ -31,6 +31,7 @@ class HtmlMinifyMiddleware
         if ($response instanceof Response && $this->isValidHTMLResponse($response)) {
             try {
                 $html = (new HtmlMinify($response->getContent()))->minifiedHtml();
+
                 return $response->setContent($html);
             } catch (Exception $e) {
                 // Log the error but don't break the response
@@ -50,7 +51,7 @@ class HtmlMinifyMiddleware
     protected function shouldSkipMinification(): bool
     {
         // Skip if minification is disabled
-        if (!config('html-minify.enabled', true)) {
+        if (! config('html-minify.enabled', true)) {
             return true;
         }
 
