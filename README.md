@@ -1,59 +1,21 @@
-# HTML Minify for Statamic v5
+# HTML Minify for Statamic
 
-![Statamic v5](https://img.shields.io/badge/Statamic-5.0+-FF269E)
-![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4)
-![Test Suite](https://github.com/el-schneider/statamic-html-minify/workflows/Test%20Suite/badge.svg)
+![Statamic 5 and 6](https://img.shields.io/badge/Statamic-5%20%7C%206-FF269E)
+![PHP 8.2+](https://img.shields.io/badge/PHP-8.2%2B-777BB4)
+[![Tests](https://github.com/el-schneider/statamic-html-minify/actions/workflows/tests.yaml/badge.svg)](https://github.com/el-schneider/statamic-html-minify/actions/workflows/tests.yaml)
 
-A modern HTML minification addon for Statamic v5 that automatically compresses your website's HTML output, reducing page load times and bandwidth usage.
-
-## Features
-
-- **Automatic HTML Minification**: Compresses HTML on every request via middleware
-- **Statamic v5 Compatible**: Fully modernized for the latest Statamic version
-- **Performance Optimized**: Cached minification engine for optimal performance
-- **Developer Friendly**: Skip minification in debug mode during development
-- **Highly Configurable**: Comprehensive configuration with environment variable support
-- **Error Resilient**: Graceful fallback if minification fails
-- **Production Ready**: Battle-tested with comprehensive test suite
+Minifies HTML responses in Statamic 5 and 6 through Laravel's web middleware stack.
 
 ## Installation
 
-Install the addon via Composer:
-
 ```bash
 composer require el-schneider/statamic-html-minify
-```
-
-Publish the configuration file:
-
-```bash
 php artisan vendor:publish --provider="ElSchneider\HtmlMinify\HtmlMinifyServiceProvider"
 ```
 
 ## Configuration
 
-The addon provides extensive configuration options via `config/html-minify.php`:
-
-```php
-return [
-    // Enable/disable minification entirely
-    'enabled' => env('HTML_MINIFY_ENABLED', true),
-
-    // Skip minification when APP_DEBUG is true
-    'skip_on_debug' => env('HTML_MINIFY_SKIP_ON_DEBUG', false),
-
-    // Minification options
-    'removeComments' => env('HTML_MINIFY_REMOVE_COMMENTS', true),
-    'sumUpWhitespace' => env('HTML_MINIFY_SUM_UP_WHITESPACE', true),
-    'removeSpacesBetweenTags' => env('HTML_MINIFY_REMOVE_SPACES_BETWEEN_TAGS', true),
-
-    // ... and many more options
-];
-```
-
-### Environment Variables
-
-All configuration options support environment variables for easy deployment:
+The published `config/html-minify.php` file controls the middleware and each `voku/html-min` option exposed by the addon.
 
 ```env
 HTML_MINIFY_ENABLED=true
@@ -61,38 +23,63 @@ HTML_MINIFY_SKIP_ON_DEBUG=true
 HTML_MINIFY_REMOVE_COMMENTS=true
 ```
 
-## Documentation
+Publish the configuration first:
 
-For detailed configuration options and advanced usage, see the [DOCUMENTATION.md](./DOCUMENTATION.md).
+```bash
+php artisan vendor:publish --provider="ElSchneider\HtmlMinify\HtmlMinifyServiceProvider"
+```
+
+Every option can also be set through the listed environment variable.
+
+| Config key | Environment variable | Default | Effect |
+| --- | --- | --- | --- |
+| `enabled` | `HTML_MINIFY_ENABLED` | `true` | Minify eligible HTML responses. |
+| `skip_on_debug` | `HTML_MINIFY_SKIP_ON_DEBUG` | `false` | Return HTML unchanged when `APP_DEBUG=true`. |
+| `optimizeViaHtmlDomParser` | `HTML_MINIFY_OPTIMIZE_VIA_DOM_PARSER` | `true` | Parse and optimize the HTML DOM. |
+| `removeComments` | `HTML_MINIFY_REMOVE_COMMENTS` | `true` | Remove regular HTML comments. Protected conditional comments remain. |
+| `sumUpWhitespace` | `HTML_MINIFY_SUM_UP_WHITESPACE` | `false` | Collapse runs of whitespace. Test before enabling: `voku/html-min` 5.0.0 can remove literal non-breaking spaces. |
+| `sortCssClassNames` | `HTML_MINIFY_SORT_CSS_CLASS_NAMES` | `false` | Sort CSS class names for more compressible output. |
+| `sortHtmlAttributes` | `HTML_MINIFY_SORT_HTML_ATTRIBUTES` | `false` | Sort attributes for more compressible output. |
+| `removeWhitespaceAroundTags` | `HTML_MINIFY_REMOVE_WHITESPACE_AROUND_TAGS` | `false` | Remove whitespace around tags. This can change rendered text. |
+| `removeSpacesBetweenTags` | `HTML_MINIFY_REMOVE_SPACES_BETWEEN_TAGS` | `false` | Remove whitespace between tags. This joins text separated by inline elements. |
+| `removeOmittedQuotes` | `HTML_MINIFY_REMOVE_OMITTED_QUOTES` | `false` | Remove attribute quotes where HTML permits it. |
+| `removeOmittedHtmlTags` | `HTML_MINIFY_REMOVE_OMITTED_HTML_TAGS` | `false` | Remove optional HTML tags. This can affect scripts and selectors that inspect source markup. |
+
+### Existing installs and whitespace upgrades
+
+Existing users who already published the config file will keep their previous values after package updates. When upgrading, explicitly set both of these to `false` (or set the environment variables to `false`) if your pages rely on existing whitespace boundaries:
+
+- `sumUpWhitespace`
+- `removeSpacesBetweenTags`
+
+If config is cached, clear and rebuild it after changing these values:
+
+```bash
+php artisan config:clear
+php artisan config:cache
+```
+
+### Behavior
+
+The middleware skips streamed responses, JSON responses, disabled/debug requests, and responses whose `Content-Type` is not `text/html`.
+
+The non-breaking-space behavior is tracked at <https://github.com/voku/HtmlMin/issues/136>.
 
 ## Requirements
 
 - PHP 8.2+
-- Statamic v5.0+
-- Laravel 10/11
+- Statamic 5 or 6
 
 ## Testing
 
-Run the test suite:
-
 ```bash
-vendor/bin/pest
+composer test
 ```
 
 ## Credits
 
-This addon is maintained by [el-schneider](https://github.com/el-schneider) and builds upon the original work by:
-
-- [Vaggelis Yfantis](https://github.com/octoper) - Original author and creator
-- [All Contributors](../../contributors)
-
-Big thanks to Vaggelis for creating this addon and sharing it with the community! 🙏
+Maintained by [el-schneider](https://github.com/el-schneider). Based on the original addon by [Vaggelis Yfantis](https://github.com/octoper).
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
-
-## Resources
-
-- [Statamic v5 Docs](https://statamic.dev)
-- [Statamic Discord](https://statamic.com/discord)
+MIT

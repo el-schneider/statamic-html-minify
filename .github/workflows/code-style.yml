@@ -1,0 +1,40 @@
+name: Code style
+
+on:
+  push:
+    paths:
+      - '**.php'
+      - composer.json
+      - .php-cs-fixer.dist.php
+      - .php_cs.laravel
+  pull_request:
+    paths:
+      - '**.php'
+      - composer.json
+      - .php-cs-fixer.dist.php
+      - .php_cs.laravel
+
+permissions:
+  contents: read
+
+jobs:
+  code-style:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          extensions: dom, fileinfo, intl, mbstring, zip
+          coverage: none
+
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-interaction
+
+      - name: Check PHP code style
+        run: vendor/bin/php-cs-fixer fix --allow-risky=yes --dry-run --diff

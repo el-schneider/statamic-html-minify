@@ -46,9 +46,9 @@ return [
 
     /**
      * Sum up whitespace characters to single spaces.
-     * Recommended for better compression.
+     * Disabled by default because html-min 5.0 can remove non-breaking spaces.
      */
-    'sumUpWhitespace' => env('HTML_MINIFY_SUM_UP_WHITESPACE', true),
+    'sumUpWhitespace' => env('HTML_MINIFY_SUM_UP_WHITESPACE', false),
 
     /**
      * Sort CSS class names alphabetically.
@@ -70,9 +70,9 @@ return [
 
     /**
      * Remove whitespace between HTML tags.
-     * Generally safe and provides good compression.
+     * WARNING: This can join text separated by inline elements.
      */
-    'removeSpacesBetweenTags' => env('HTML_MINIFY_REMOVE_SPACES_BETWEEN_TAGS', true),
+    'removeSpacesBetweenTags' => env('HTML_MINIFY_REMOVE_SPACES_BETWEEN_TAGS', false),
 
     /**
      * Remove quotes around HTML attribute values when safe.

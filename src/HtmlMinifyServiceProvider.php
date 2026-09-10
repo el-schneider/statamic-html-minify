@@ -6,17 +6,15 @@ use Statamic\Providers\AddonServiceProvider;
 
 /**
  * HTML Minify addon service provider.
- * 
+ *
  * This service provider registers the HTML minification middleware
  * and handles configuration publishing for the Statamic addon.
- * 
- * @package ElSchneider\HtmlMinify
  */
 class HtmlMinifyServiceProvider extends AddonServiceProvider
 {
     /**
      * The middleware groups to register with the application.
-     * 
+     *
      * @var array<string, array<class-string>>
      */
     protected $middlewareGroups = [
@@ -37,7 +35,7 @@ class HtmlMinifyServiceProvider extends AddonServiceProvider
 
     /**
      * Register the application services.
-     * 
+     *
      * This method merges the addon's configuration with the application's
      * configuration, making it available via the config() helper.
      */

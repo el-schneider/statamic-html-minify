@@ -13,6 +13,7 @@ use Statamic\Testing\Concerns\PreventsSavingStacheItemsToDisk;
 abstract class TestCase extends OrchestraTestCase
 {
     use PreventsSavingStacheItemsToDisk;
+
     protected function getPackageProviders($app): array
     {
         return [
@@ -47,7 +48,7 @@ abstract class TestCase extends OrchestraTestCase
 
         foreach ($configs as $config) {
             $configPath = __DIR__."/../vendor/statamic/cms/config/{$config}.php";
-            if (!file_exists($configPath)) {
+            if (! file_exists($configPath)) {
                 // Try the main project's vendor directory
                 $configPath = __DIR__."/../../../../vendor/statamic/cms/config/{$config}.php";
             }
